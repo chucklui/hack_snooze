@@ -74,12 +74,20 @@ class StoryList {
    */
 
   async addStory(userObject, storyObject) {
-    return new Story(userObject.storyId, 
-              storyObject.title, 
-              storyObject.author, 
-              storyObject.url, 
+    let userToken = userObject.token;
+
+    let newStory = new Story(
+              userObject.storyId, 
+              storyObject.story.title, 
+              storyObject.story.author, 
+              storyObject.story.url, 
               userObject.userName, 
-              userObject.createdAt)
+              userObject.createdAt
+              );
+
+    let response = await axios.post(`${BASE_URL}/story`, newStory, {"token" : userToken});  
+
+    
   }
 }
 
