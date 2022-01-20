@@ -74,20 +74,18 @@ class StoryList {
    */
 
   async addStory(userObject, storyObject) {
-    let userToken = userObject.token;
+    console.log('userObject: ', userObject);
+    console.log('storyObject: ', userObject);
+    let userToken = userObject.loginToken;
 
-    let newStory = new Story(
-              userObject.storyId, 
-              storyObject.story.title, 
-              storyObject.story.author, 
-              storyObject.story.url, 
-              userObject.userName, 
-              userObject.createdAt
-              );
+    let response = await axios({url: `${BASE_URL}/stories`,
+                               method: "POST", 
+                               data: {"token": userToken, "story": storyObject}
+                               });
 
-    let response = await axios.post(`${BASE_URL}/story`, newStory, {"token" : userToken});  
-
-    
+    let storyData = response.data.story;
+    let newStory = new Story(storyData);
+    return newStory;
   }
 }
 
