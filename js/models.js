@@ -23,9 +23,10 @@ class Story {
 
   /** Parses hostname out of URL and returns it. */
 
-  getHostName() {
+  getHostName () {
     const url = new URL(this.url);
-    return url.host;
+    // console.log(url);
+    return url;
   }
 }
 
@@ -209,8 +210,9 @@ class User {
     }
   }
 
-  /** accepts a Story instance and 
-   * update API and frontend favorite list array.
+  /** accepts a Story instance and
+   * update API with new favorite and 
+   * create new Story instance to update frontend favorite
   */
   async addFavorite(story) {
     const userToken = this.loginToken;
@@ -218,14 +220,14 @@ class User {
     const response = await axios({
       url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
       method: "POST",
-      data: { "token": userToken},
+      data: { "token": userToken}
     });
-
-    this.favorites = response.data.user.favorites;
+    this.favorites = response.data.user.favorites.map(s => new Story(s));
   }
   
   /** accepts a Story instance and 
-   * updates API and frontend favorite list array
+   * updates API with new favorite and 
+   * create new Story instance to update frontend favorite
    * by unfavoriting/removing the story 
   */
   async removeFavorite(story){
@@ -237,7 +239,7 @@ class User {
       data: { "token": userToken},
     });
 
-    this.favorites = response.data.user.favorites;
+    this.favorites = response.data.user.favorites.map(s => new Story(s));
   }
 
 
