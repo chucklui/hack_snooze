@@ -51,8 +51,11 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
-/**this function get data from the form and call the .addStory method
-and put the new story on page */
+/** Gets data from the new story form, 
+ * uses those values to create a new Story instance, 
+ * generates their HTML, 
+ * and puts the new story on page 
+*/
 async function putNewStoryOnPage(){
   console.debug('putNewStoryOnPage:' );
   let newAuthorInput = $("#author-input").val();
@@ -70,4 +73,5 @@ async function putNewStoryOnPage(){
   $allStoriesList.prepend($newStory);
 }
 
+//add click handler on new story form submit button
 $formSubmitBtn.on('click', putNewStoryOnPage);

@@ -14,8 +14,8 @@ const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
 
-const $newStoryForm = $("#new-story-form");
 const $navSubmit = $("#nav-submit");
+const $newStoryForm = $("#new-story-form");
 const $formSubmitBtn = $("#form-submit-btn");
 
 /** To make it easier for individual components to show just themselves, this

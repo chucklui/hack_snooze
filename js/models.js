@@ -66,16 +66,14 @@ class StoryList {
     return new StoryList(stories);
   }
 
-  /** Adds story data to API, makes a Story instance, adds it to story list.
+  /** Adds story data to API, makes a Story instance, returns the new Story instance.
+   * accepts 2 arguments:
    * - user - the current instance of User who will post the story
    * - obj of {title, author, url}
-   *
+   * TODO: check back, does this actually to be "added to the story list"?
    * Returns the new Story instance
-   */
+  */
 
-  /**this function takes in the cuurentUser and story object 
-  to POST new data to the API. Use the response data back from the API 
-  to create a new instance from class Story and return the instance. */
   async addStory(userObject, storyObject) {
     // console.log('userObject: ', userObject);
     // console.log('storyObject: ', userObject);
