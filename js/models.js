@@ -66,7 +66,7 @@ class StoryList {
     return new StoryList(stories);
   }
 
-  /** Adds story data to API, makes a Story instance, returns the new Story instance.
+  /** Adds story data to API, makes a Story instance, add to story list on local memory.
    * accepts 2 arguments:
    * - user - the current instance of User who will post the story
    * - obj of {title, author, url}
@@ -79,13 +79,16 @@ class StoryList {
     // console.log('storyObject: ', userObject);
     let userToken = userObject.loginToken;
 
-    let response = await axios({url: `${BASE_URL}/stories`,
-                               method: "POST", 
-                               data: {"token": userToken, "story": storyObject}
-                               });
+    let response = await axios({
+      url: `${BASE_URL}/stories`,
+      method: "POST", 
+      data: {"token": userToken, "story": storyObject}
+    });
 
     let storyData = response.data.story;
     let newStory = new Story(storyData);
+    this.stories.push(newStory); 
+    //made API call, stored backend--push into local frontend/local copy of the stories list so they're in sync
     return newStory;
   }
 }

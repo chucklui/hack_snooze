@@ -56,22 +56,22 @@ function putStoriesOnPage() {
  * generates their HTML, 
  * and puts the new story on page 
 */
-async function putNewStoryOnPage(){
+async function putNewStoryOnPage(evt){
   console.debug('putNewStoryOnPage:' );
-  let newAuthorInput = $("#author-input").val();
-  let newTitleInput = $("#title-input").val();
-  let newUrlInput = $("#url-input").val();
+  evt.preventDefault();
+  const author = $("#author-input").val();
+  const title = $("#title-input").val();
+  const url = $("#url-input").val();
+  const newStoryDataObj = {title, author, url};
 
-  let newStoryInstance = await storyList.addStory(currentUser, {
-    title: newTitleInput,
-    author: newAuthorInput,
-    url: newUrlInput
-  });
+  let newStoryInstance = await storyList.addStory(currentUser, newStoryDataObj);
 
   const $newStory = generateStoryMarkup(newStoryInstance);
 
   $allStoriesList.prepend($newStory);
+
+  $newStoryForm.hide();
 }
 
-//add click handler on new story form submit button
-$formSubmitBtn.on('click', putNewStoryOnPage);
+//add click handler on new story form itself, listen for submit (screen readers may use enter key)
+$newStoryForm.on('submit', putNewStoryOnPage);
