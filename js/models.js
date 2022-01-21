@@ -81,13 +81,13 @@ class StoryList {
 
     let response = await axios({
       url: `${BASE_URL}/stories`,
-      method: "POST", 
-      data: {"token": userToken, "story": storyObject}
+      method: "POST",
+      data: { "token": userToken, "story": storyObject }
     });
 
     let storyData = response.data.story;
     let newStory = new Story(storyData);
-    this.stories.push(newStory); 
+    this.stories.push(newStory);
     //made API call, stored backend--push into local frontend/local copy of the stories list so they're in sync
     return newStory;
   }
@@ -105,13 +105,13 @@ class User {
    */
 
   constructor({
-                username,
-                name,
-                createdAt,
-                favorites = [],
-                ownStories = []
-              },
-              token) {
+    username,
+    name,
+    createdAt,
+    favorites = [],
+    ownStories = []
+  },
+    token) {
     this.username = username;
     this.name = name;
     this.createdAt = createdAt;
@@ -208,4 +208,20 @@ class User {
       return null;
     }
   }
+
+  /** this addFavorite method accepts a Story instance and 
+   * update API and frontend favorite list array.
+  */
+  async addFavorite(story) {
+    let userToken = this.loginToken;
+
+    const response = await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+      method: "POST",
+      data: { "token": userToken},
+    });
+
+    this.favorites = response.data.user.favorites;
+  }
+  
 }
