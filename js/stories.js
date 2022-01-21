@@ -20,7 +20,7 @@ async function getAndShowStoriesOnStart() {
  */
 
 function generateStoryMarkup(story) {
-  // console.debug("generateStoryMarkup", story);
+  console.debug("generateStoryMarkup");
 
   const hostName = story.getHostName();
   return $(`
@@ -57,7 +57,7 @@ function putStoriesOnPage() {
  * and puts the new story on page 
 */
 async function putNewStoryOnPage(evt){
-  console.debug('putNewStoryOnPage:' );
+  console.debug('putNewStoryOnPage');
   evt.preventDefault();
   const author = $("#author-input").val();
   const title = $("#title-input").val();
@@ -75,3 +75,18 @@ async function putNewStoryOnPage(evt){
 
 //add click handler on new story form itself, listen for submit (screen readers may use enter key)
 $newStoryForm.on('submit', putNewStoryOnPage);
+
+/** Accepts a currentUser User instance
+ * creates markup for each favorited story 
+ * adds to favorite stories list
+*/
+function putFavoriteStoriesOnPage(currentUser){
+  console.debug('putFavoriteStoryOnPage');
+  const currentUserFavs = currentUser.favorites;
+  $favStoriesList.empty();
+
+  for(let fav of currentUserFavs){
+    let $favMarkup = generateStoryMarkup(fav);
+    $favStoriesList.append($favMarkup);
+  }
+}

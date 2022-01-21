@@ -24,8 +24,8 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    const url = new URL(this.url);
+    return url.host;
   }
 }
 
@@ -209,11 +209,11 @@ class User {
     }
   }
 
-  /** this addFavorite method accepts a Story instance and 
+  /** accepts a Story instance and 
    * update API and frontend favorite list array.
   */
   async addFavorite(story) {
-    let userToken = this.loginToken;
+    const userToken = this.loginToken;
 
     const response = await axios({
       url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
@@ -224,4 +224,24 @@ class User {
     this.favorites = response.data.user.favorites;
   }
   
+  /** accepts a Story instance and 
+   * updates API and frontend favorite list array
+   * by unfavoriting/removing the story 
+  */
+  async removeFavorite(story){
+    const userToken = this.loginToken;
+
+    const response = await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+      method: "DELETE",
+      data: { "token": userToken},
+    });
+
+    this.favorites = response.data.user.favorites;
+  }
+
+
+
+
+
 }
