@@ -26,8 +26,20 @@ class Story {
   getHostName () {
     const url = new URL(this.url);
     // console.log(url);
-    return url;
+    return url.hostname;
   }
+
+  /** this method takes in an id and 
+   * return the story instance w/ matching id from API
+  */
+  static async getStoryById (id){
+    let response = await axios({
+      url: `${BASE_URL}/stories/${id}`,
+      method: "GET"
+    });
+    return response.data.story;
+  }
+
 }
 
 
@@ -216,7 +228,7 @@ class User {
   */
   async addFavorite(story) {
     const userToken = this.loginToken;
-
+    
     const response = await axios({
       url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
       method: "POST",
@@ -236,7 +248,7 @@ class User {
     const response = await axios({
       url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
       method: "DELETE",
-      data: { "token": userToken},
+      data: { "token": userToken}
     });
 
     this.favorites = response.data.user.favorites.map(s => new Story(s));

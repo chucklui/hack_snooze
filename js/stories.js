@@ -117,39 +117,26 @@ function toggleStarIcon(evt){
 }
 
 /** actually adds the story whose star icon was clicked to favorites  */
-function addFavOnStarClick (target){
+async function addFavOnStarClick (target){
   console.debug('addFavOnStarClick');
   console.log("addFavOnStarClick target = ", target);
   //find the id of the story that was favorited
   let $storyLiId = $(target).closest("li").attr("id");
-  console.log("clicked story li id is: ", $storyLiId);
 
-  // // loop over storyList to find the Story instance matching the 
-  // // id of the clicked story
-  // let matchingStory = storyList.stories.find(s => {
-  //   return s.id === $storyLiId;
-  // })
-  console.log("matchingStory should be an array with one Story instance: ", matchingStory);
+  const storyInstance = Story.getStoryById($storyLiId);
 
-  let storyInstance = matchingStory[0];
   console.log("storyInstance should be the actual Story instance obj = ", storyInstance); 
   currentUser.addFavorite(storyInstance);
+  console.log('current user fav array: ', currentUser.favorites);
 }
 
-// /** removes the story whose star icon was clicked to favorites */
-// function addFavOnStarClick (target){
-//   //find the id of the story that was favorited
-//   let $storyLiId = $(target).closest("li").attr("id");
-//   // console.log("clicked story li id is: ", $storyLiId);
 
-//   // loop over storyList to find the Story instance matching the 
-//   // id of the clicked story
-//   let matchingStory = storyList.filter(s => {
-//     return s.id === $storyLiId;
-//   })
 
-//   let storyInstance = matchingStory[0]; 
-//   currentUser.addFavorite(storyInstance);
-// }
+
+// // loop over storyList to find the Story instance matching the 
+// // id of the clicked story
+// let matchingStory = storyList.stories.find(s => {
+//   return s.id === $storyLiId;
+// })
 
 //add a static method on the Story class (getStoryById), pass in an id that gives you back the Story obj 
