@@ -123,20 +123,9 @@ async function addFavOnStarClick (target){
   //find the id of the story that was favorited
   let $storyLiId = $(target).closest("li").attr("id");
 
-  const storyInstance = Story.getStoryById($storyLiId);
+  const storyInstance = await Story.getStoryById($storyLiId);
 
   console.log("storyInstance should be the actual Story instance obj = ", storyInstance); 
   currentUser.addFavorite(storyInstance);
   console.log('current user fav array: ', currentUser.favorites);
 }
-
-
-
-
-// // loop over storyList to find the Story instance matching the 
-// // id of the clicked story
-// let matchingStory = storyList.stories.find(s => {
-//   return s.id === $storyLiId;
-// })
-
-//add a static method on the Story class (getStoryById), pass in an id that gives you back the Story obj 
